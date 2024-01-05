@@ -25,7 +25,7 @@ jobs:
       with:
         aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: your-aws-region  # Replace with your AWS region
+        aws-region: ap-south-1  # Replace with your AWS region
 
     - name: Build and Push Docker Image
       run: |
