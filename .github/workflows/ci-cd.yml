@@ -2,10 +2,8 @@ name: CI/CD for FastAPI on EKS
 
 on:
   push:
-    branches:
-      - master
-  pull_request:
-      - master
+    branches: ["master"]
+  pull_request: ["master"]
 
 jobs:
   build:
