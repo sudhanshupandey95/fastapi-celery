@@ -55,5 +55,5 @@ jobs:
         password: Rahul95@#
 
         script: |
-          kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
-          kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
+          kubectl apply -f /github/workspace/k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
+          kubectl apply -f /github/workspace/k8s/service.yaml  # Replace with your Kubernetes service YAML file
