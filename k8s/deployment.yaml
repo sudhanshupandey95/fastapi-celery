@@ -16,7 +16,7 @@ spec:
     spec:
       containers:
         - name: rahulecr95
-          image: 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
+          image: rahuldocker95/fastapi-celery:latest
           imagePullPolicy: Always
           ports:
             - containerPort: 8088
