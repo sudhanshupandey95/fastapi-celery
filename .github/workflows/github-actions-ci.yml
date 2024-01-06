@@ -77,11 +77,11 @@ jobs:
         password: Rahul95@#
 
         script: |
-          # Pull the Docker image from Docker Hub
-          docker pull rahuldocker95/fastapi-celery:latest
+          # # Pull the Docker image from Docker Hub
+          # docker pull rahuldocker95/fastapi-celery:latest
 
-          # Set the Kubernetes context
-          kubectl config use-context himanshu
+          # # Set the Kubernetes context
+          # kubectl config use-context himanshu
 
           # Apply the Kubernetes deployment and service configurations
           kubectl apply -f ./k8s/deployment.yaml
