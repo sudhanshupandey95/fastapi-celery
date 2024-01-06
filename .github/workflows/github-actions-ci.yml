@@ -20,14 +20,8 @@ jobs:
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
-        args: kubectl get pods
-
-    # - name: Set up Kubectl
-    #   uses: azure/k8s-set-context@v1
-    #   env:
-    #     kubeconfig: ${{ secrets.KUBE_CONFIG }}
-    #   with:
-    #     args: kubectl get pods
+      run: |
+        kubectl get pods
 
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v2
