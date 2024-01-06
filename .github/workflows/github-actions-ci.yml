@@ -35,6 +35,13 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push rahuldocker95/fastapi-celery:latest
 
+    - name: Debug GitHub Secrets
+      run: |
+        echo "EKS_HOST: ${{ secrets.EKS_HOST }}"
+        echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
+        echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
+
+
   deploy:
     needs: build
     runs-on: ubuntu-latest
