@@ -50,7 +50,7 @@ jobs:
     - name: Deploy to EKS
       uses: appleboy/ssh-action@master
       with:
-        host: https:/13.201.70.248
+        host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
         username: arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
         password: Rahul95@#
 
