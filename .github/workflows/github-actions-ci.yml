@@ -70,7 +70,7 @@ jobs:
 
     steps:
     - name: Deploy to EKS
-      uses:  appleboy/ssh-action@v.0.1.3
+      uses:  actions/checkout@v2
       with:
         host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
         username: himanshu
