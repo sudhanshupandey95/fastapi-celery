@@ -42,10 +42,10 @@ jobs:
         echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
 
       - name: Debug GitHub Secrets
-      run: |
-        echo "EKS_HOST: ${{ secrets.EKS_HOST }}"
-        echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
-        echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
+        run: |
+          echo "EKS_HOST: ${{ secrets.EKS_HOST }}"
+          echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
+          echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
 
 
   # deploy:
