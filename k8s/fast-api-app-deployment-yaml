@@ -1,21 +1,21 @@
 apiVersion: apps/v1
 kind: Deployment
 metadata:
-  name: your-app-deployment
+  name: fastapi-celery
   labels:
-    app: your-app
+    app: fastapi-celery
 spec:
   replicas: 3
   selector:
     matchLabels:
-      app: your-app
+      app: fastapi-celery
   template:
     metadata:
       labels:
-        app: your-app
+        app: fastapi-celery
     spec:
       containers:
-      - name: your-app-container
-        image: your-docker-repo/your-app:latest
+      - name: rahulecr95
+        image: 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
         ports:
         - containerPort: 8000
