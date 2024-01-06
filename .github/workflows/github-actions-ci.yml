@@ -16,7 +16,7 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Set up Kubectl
+          - name: Set up Kubectl
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
@@ -45,6 +45,6 @@ jobs:
         host: ${{ secrets.EKS_HOST }}
         username: ${{ secrets.EKS_USERNAME }}
         key: ${{ secrets.EKS_SSH_KEY }}
-      run: |
-        kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
-        kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
+        script: |
+          kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
+          kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
