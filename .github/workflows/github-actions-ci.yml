@@ -52,7 +52,33 @@ jobs:
       with:
         host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
         username: arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
-        key: ${{ secrets.EKS_SSH_KEY }}
+        key: -----BEGIN RSA PRIVATE KEY-----
+MIIEpAIBAAKCAQEAgZNBguDPr9wyiX+XsiiPdhIFlOExhhGDK+3vCX719GYmMoOS
+KgrkioNEs/GCRdyWmaEP+yTFBa33QclzQWcwwZP63Rg+7FqppJGz2sDf5RmBPJhR
+M34ZH/CP2KUIFw0KZ9FARV8NQ/JEyp9fbUynQi8NQEJQeW2DGcwXHc6RvkEMcg0J
+M9TBLWMyfJdfWH5OxaTZa7AR0CI9gyDoLAvd/xoLwEZ5i3B78OxJ/KE2sqTNTCzC
+H8IatFzs3k0Hp/B5ysQPhH/FwI7atv06ooQ0VyRxotpRotBA7zBNy0dS47twAaQH
+8hasCbXY6g9yHjeL+FzCGD4MQv2PJgK2yP9qCwIDAQABAoIBABTrBORwDpdBYRc5
+de/ZBG/3MNd8E1aldRueabyKtoIiC4CUJQCMiaCi2HCESJemqNlcWwwcP4JPN19z
+ehvQ4NofXZxb0ayuZjyfGP3zrTF7EJYLsPAzJzM0zsQWwFuYS1m/OjT4x1d0wQ5E
+9E7c1ROmLOl2yy8PMt7zR7gUJQsljvO31Sjmwphq9xTPlrZPuLLP28AgVdYGa7NX
+nNrVLpvPTfkr869A/9elIOqsmMiC9+OiNJcKcRSshqBKbo8T5jpwbn24kCN5+4UP
+uuNdYNxveJnt1yFsryERf4L9uUGfyLcUXwoQb+7sHkMWR8WyC3AAd5OQcJtEHZCE
+vNmh8UECgYEA/+aOhhk0jMkmQdA3pwWmmrrXV5PJ1d/8f7DHfK55jfxY9vp/CAKX
+boG1c6FlBuXQgEIVtxkggoRbMbTKLfRbXcmPU94m2TAYDTxpdFoLeFYHxQtvXBGQ
+SXbQekO/MhYzLXX3tZm1S/U4riZ5sSdLp4lx3vII5OddWNrHHCd+ZDMCgYEAgaAj
+m8RLVc2A/jqV1cwnYefyOVnI3EGJ36d9UqduRevFAZjrnvJUFwAtPewvOwAh0S/J
+OK3OBDj4EcQmcn2c6uCfFChB8NJryxURBHEdjl/C1NIbqmHUOuNO3+f/dbNHKbLx
+Lqs9//yU2d6sCtApth6vFWFwxSB4zMgIFJ8ESskCgYEAx9dZfke4zilYAxWEIJ89
+GKDJAs+bU7b0DRQU9b2bl9J194pwIeVENTx+Y6qqptRaG4+APdkVlleekBbLvU+S
++o8pqylV1U7FubBv+jlHs9YbgzoG4TOmJnjvHkxBx++mT95McDl1Z7g9Z2MMrdgu
+MMwZbS4+2+QC9h0EWWxOPBkCgYB2793cXecV6oLSQiUbT8BO+Ejr0HMZjdUY7xBx
+l4j6BRP1nD+NzyHTHOlmKOFJTJy62RLTu74NZ8xOWOFCKfmiFcpA75NZiWk4pLLB
+lZyd90XIiqSx2COoiMrlbXSbpYzFORhNTviLelGF+ud24Ht1TIAvqQGVDm9ozp2D
+dki06QKBgQDYnply/xVLrZNaETETFCuZ5B/c1mvzj74amgeTVWaHTnjuJe7tpgsZ
+ktRrNgAK9Nhd9nOUVOWiQMw/Vsnn7i26HABKiifowlsCrRayiykWP6tPWFI8bugl
+3/n2ZWZRimechwWUkSoiTuUGctYHFOXsus6arIY+HCktcd6Ndvi8cQ==
+-----END RSA PRIVATE KEY-----
         script: |
           kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
           kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
