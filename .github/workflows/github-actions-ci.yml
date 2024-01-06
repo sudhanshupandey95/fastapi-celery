@@ -36,7 +36,7 @@ jobs:
         docker push rahuldocker95/fastapi-celery:latest
 
     - name: Update kube config
-      run: aws eks update-kubeconfig --name primuslearning
+      run: aws eks update-kubeconfig --name himanshu
 
     - name: Deploy to EKS
       run: |
