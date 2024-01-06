@@ -77,5 +77,7 @@ jobs:
         password: Rahul95@#
 
         script: |
+          docker pull rahuldocker95/fastapi-celery:latest
+          kubectl config use-context himanshu
           kubectl apply -f ./k8s/deployment.yaml
           kubectl apply -f ./k8s/service.yaml
