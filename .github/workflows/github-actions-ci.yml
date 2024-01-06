@@ -20,26 +20,26 @@ jobs:
     - name: Set up Kubectl
       uses: azure/k8s-set-context@v1
       with:
-        kubeconfig: ${{ secrets.KUBE_CONFIG }}
+        kubeconfig: ${{ environment.KUBE_CONFIG }}
 
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v2
       with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-access-key-id: ${{ environment.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ environment.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-south-1  # Replace with your AWS region
 
     - name: Build and Push Docker Image
       run: |
         docker build -t rahuldocker95/fastapi-celery:latest .
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker login -u ${{ environment.DOCKER_USERNAME }} -p ${{ environment.DOCKER_PASSWORD }}
         docker push rahuldocker95/fastapi-celery:latest
 
     - name: Debug GitHub Secrets
       run: |
-        echo "EKS_HOST: ${{ secrets.EKS_HOST }}"
-        echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
-        echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
+        echo "EKS_HOST: ${{ environment.EKS_HOST }}"
+        echo "EKS_USERNAME: ${{ environment.EKS_USERNAME }}"
+        echo "EKS_SSH_KEY: ${{ environment.EKS_SSH_KEY }}"
 
 
   deploy:
@@ -50,9 +50,9 @@ jobs:
     - name: Deploy to EKS
       uses: appleboy/ssh-action@master
       with:
-        host: ${{ secrets.EKS_HOST }}
-        username: ${{ secrets.EKS_USERNAME }}
-        key: ${{ secrets.EKS_SSH_KEY }}
+        host: ${{ environment.EKS_HOST }}
+        username: ${{ environment.EKS_USERNAME }}
+        key: ${{ environment.EKS_SSH_KEY }}
         script: |
           kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
           kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
