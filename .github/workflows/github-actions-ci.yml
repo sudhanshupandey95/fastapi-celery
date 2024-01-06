@@ -69,7 +69,7 @@ jobs:
       with:
         host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
         username: ${{ secrets.EKS_USERNAME }}
-        key: ${{ secrets.EKS_SSH_KEY }}
+        password: Rahul95@#
 
         script: |
           # Pull the Docker image from Docker Hub
