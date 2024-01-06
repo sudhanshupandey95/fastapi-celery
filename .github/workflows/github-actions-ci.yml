@@ -11,6 +11,7 @@ on:
 jobs:
   build:
     runs-on: ubuntu-latest
+    environment: FAST_API_DEPLOYMENT
 
     steps:
     - name: Checkout code
