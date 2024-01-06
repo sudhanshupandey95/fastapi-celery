@@ -67,7 +67,7 @@ jobs:
     - name: Deploy to EKS
       uses: appleboy/ssh-action@master
       with:
-        host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
+        host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
         username: ${{ secrets.EKS_USERNAME }}
         password: Rahul95@#
 
