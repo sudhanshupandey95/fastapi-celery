@@ -19,4 +19,4 @@ spec:
           image: 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95:1.1
           imagePullPolicy: Always
           ports:
-            - containerPort: 8080
+            - containerPort: 8088
