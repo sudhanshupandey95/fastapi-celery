@@ -16,8 +16,13 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
+          # - name: Set up Kubectl
+    #   uses: azure/k8s-set-context@v1
+    #   with:
+    #     kubeconfig: ${{ secrets.KUBE_CONFIG }}
+
     - name: Set up Kubectl
-      uses: appleboy/ssh-action@master
+      uses: azure/k8s-set-context@v1
       env:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
       with:
