@@ -4,9 +4,11 @@ on:
   push:
     branches:
       - master
+    env:
+    FAST_API_DEPLOYMENT: ${{ secrets.FAST_API_DEPLOYMENT }}
   pull_request:
     branches:
-      - master #jhjh
+      - master 
 
 jobs:
   build:
