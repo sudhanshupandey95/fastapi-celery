@@ -41,11 +41,7 @@ jobs:
         echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
         echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
 
-    - name: Debug GitHub Secrets
-      run: |
-        echo "EKS_HOST: ${{ secrets.EKS_HOST }}"
-        echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
-        echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
+
 
   # deploy:
   #   needs: build
@@ -70,7 +66,7 @@ jobs:
 
     steps:
     - name: Deploy to EKS
-      uses:  actions/checkout@v2
+      uses:  appleboy/ssh-action@master
       with:
         host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
         username: himanshu
