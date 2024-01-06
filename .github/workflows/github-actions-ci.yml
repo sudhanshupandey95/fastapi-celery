@@ -51,8 +51,8 @@ jobs:
       uses: appleboy/ssh-action@master
       with:
         host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
-        username:  arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
-        key: AAAAB3NzaC1yc2EAAAADAQABAAACAQCzfJMP/6vvWwj9dY1ZboK9awOxwWvjk4YQez5khWqYtVNpUhnwsBQYffHZ8uKrVomjh7cUjXWQn1y6ey+PwQgwrTCZDPt8cmaUWyojZiVgKgUsasK/AM2EZGc7V1tbjNV7VU+BRCI8PNOdFJgJmHuliq7q0TAuFKkiguV4K9HfrR+f0TE19E3ef41feuBD6zHI3Iaut8pmKDpNG1fuzCKYBoX5GEAt/BGsjlTbhsr0fSX2E5wBKSFXzsUZoKa2acoEdtZ1l1NgE9pPV10hqhTKSdRdtb2JiTP/udE2Zw8qPn+kN8dL5t328WBgmcCi7mWT6GNTqbATd2iYmquUb4Tm6ghdcuc68iTu2Du9HG8JXr8G5ehJkR267OEXjfJFi5y7SuzPj1Uw6sIcdTh+5aXOBGTCA6yFd1r6xtq7Auq2OBVPd+y6WcHYvxxrVP//MkyJShJyHB4BQ0ylT+6ueOwWyjAG/xr4/rdyO1aq541+LPynUNXl/Zyte9JeiT2S2z4nYUmBoVZW4LtW2NBVpcMavzkusV8WYpX6/Vc15Qd3VIwW+rbIAqUaoOlNuHmmlmP+Hpp87q4KUBgo3pK7F7F07K15a1XFpCXLxsjGdxxwitojkYA8z3SF8det67ZZwfWcIuBwsI3mZWjs34Cm/S+iKOOaxtjFnreW78k4AXJvQQ==
+        username: arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
+        key: ${{ secrets.EKS_SSH_KEY }}
         script: |
           kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
           kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
