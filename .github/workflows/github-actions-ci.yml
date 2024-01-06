@@ -47,6 +47,6 @@ jobs:
         host: ${{ secrets.EKS_HOST }}
         username: ${{ secrets.EKS_USERNAME }}
         key: ${{ secrets.EKS_SSH_KEY }}
-        script: |
-          kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
-          kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
+      run: |
+        kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
+        kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
