@@ -4,11 +4,9 @@ on:
   push:
     branches:
       - master
-    env:
-    FAST_API_DEPLOYMENT: ${{ secrets.FAST_API_DEPLOYMENT }}
   pull_request:
     branches:
-      - master 
+      - master
 
 jobs:
   build:
@@ -22,6 +20,7 @@ jobs:
       uses: azure/k8s-set-context@v1
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
+      run: kubectl get pods
 
     - name: Set up AWS CLI
       uses: aws-actions/configure-aws-credentials@v2
@@ -47,6 +46,6 @@ jobs:
         host: ${{ secrets.EKS_HOST }}
         username: ${{ secrets.EKS_USERNAME }}
         key: ${{ secrets.EKS_SSH_KEY }}
-        script: |
-          kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
-          kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
+      run: |
+        kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
+        kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
