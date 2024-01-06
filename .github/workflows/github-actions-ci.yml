@@ -35,26 +35,34 @@ jobs:
         docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
         docker push rahuldocker95/fastapi-celery:latest
 
-    - name: Debug GitHub Secrets
-      run: |
-        echo "EKS_HOST: ${{ secrets.EKS_HOST }}"
-        echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
-        echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
+    - name: Update kube config
+      run: aws eks update-kubeconfig --name primuslearning
 
-
-  deploy:
-    needs: build
-    runs-on: ubuntu-latest
-
-    steps:
     - name: Deploy to EKS
-      uses: appleboy/ssh-action@master
-      with:
-        host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
-        username: arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
-        password: Rahul95@#
-        timeout: 5m
-        
+      run: |
+        kubectl apply -f k8s/deployment.yaml
+        kubectl apply -f k8s/service.yaml
+
+    # - name: Debug GitHub Secrets
+    #   run: |
+    #     echo "EKS_HOST: ${{ secrets.EKS_HOST }}"
+    #     echo "EKS_USERNAME: ${{ secrets.EKS_USERNAME }}"
+    #     echo "EKS_SSH_KEY: ${{ secrets.EKS_SSH_KEY }}"
+
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Deploy to EKS
+  #     uses: appleboy/ssh-action@master
+  #     with:
+  #       host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
+  #       username: arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
+  #       password: Rahul95@#
+  #       timeout: 5m
+
         script: |
           kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
           kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
