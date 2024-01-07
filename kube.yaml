@@ -2,7 +2,7 @@ apiVersion: v1
 kind: Service
 metadata:
   name: fast-api-service
-  namespace: <namespace-name>
+  namespace: kube-system
   labels:
     app: fast-api-app
 spec:
@@ -18,7 +18,7 @@ apiVersion: apps/v1
 kind: Deployment
 metadata:
   name: fast-api-deployment
-  namespace: <namespace-name>
+  namespace: kube-system
   labels:
     app: fast-api-app
 spec:
