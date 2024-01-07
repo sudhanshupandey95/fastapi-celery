@@ -1,0 +1,48 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: fast-api-service
+  namespace: <namespace-name>
+  labels:
+    app: fast-api-app
+spec:
+  selector:
+    app: fast-api-app
+  ports:
+    - protocol: TCP
+      port: 80
+      targetPort: 80
+  type: LoadBalancer
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: fast-api-deployment
+  namespace: <namespace-name>
+  labels:
+    app: fast-api-app
+spec:
+  replicas: 2
+  selector:
+    matchLabels:
+      app: fast-api-app
+  template:
+    metadata:
+      labels:
+        app: fast-api-app
+    spec:
+      affinity:
+        nodeAffinity:
+          requiredDuringSchedulingIgnoredDuringExecution:
+            nodeSelectorTerms:
+            - matchExpressions:
+              - key: beta.kubernetes.io/arch
+                operator: In
+                values:
+                - amd64
+                - arm64
+      containers:
+      - name: web-app
+        image: 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95:286c645a3f792942d251c163414b83fe67946982
+        ports:
+        - containerPort: 80
