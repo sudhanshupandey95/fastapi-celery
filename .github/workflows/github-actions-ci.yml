@@ -44,11 +44,16 @@ jobs:
           # Push docker container to ECR
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
 
-  deploy-to-eks:
-    steps:
-      - name: Checkout
-        uses: actions/checkout@v2
+       - name: Pull Docker image from ECR
+        run: |
+          docker pull ${{ steps.login-ecr.outputs.registry }}/rahulecr95:latest
 
       - name: Deploy to EKS
-        run: |
-          kubectl apply -f ./kube.yaml
+      uses:  actions/checkout@v2
+      with:
+        host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
+        username: himanshu
+        password: Rahul95@#
+
+        script: |
+          kubectl apply -f kube.yaml
