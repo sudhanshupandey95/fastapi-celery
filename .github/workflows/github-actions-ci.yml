@@ -1,54 +1,45 @@
-name: CI/CD for FastAPI deployment on EKS
+name: Deploy to Amazon ECR
 
 on:
-  push:
+  push: # Run script whenever the code is commited to master branch
     branches:
-      - master
-  pull_request:
+      - master 
+  pull_request: # Run script whenever the pull request is merged with master branch
     branches:
       - master
 
+env:
+  AWS_REGION: ap-south-1 # Your AWS region, e.g. us-west-1
+  ECR_REPOSITORY: rahulecr95 # Your Amazon ECR repository name
+
 jobs:
-  build:
+  deploy:
+    name: Deploy
     runs-on: ubuntu-latest
     environment: FAST_API_DEPLOYMENT
 
     steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v4
 
-      - name: Set up Kubectl
-        uses: azure/k8s-set-context@v1
-        with:
-          kubeconfig: ${{ secrets.KUBE_CONFIG }}
-
-      - name: Build and Push Docker Image
-        run: |
-          docker build -t rahuldocker95/fastapi-celery:latest .
-          docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-          docker push rahuldocker95/fastapi-celery:latest
-
-      - name: Pull Docker image from Docker Hub
-        run: |
-          docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-celery:latest
-
-      - name: Set up AWS CLI
-        uses: aws-actions/configure-aws-credentials@v2
+      - name: Configure AWS credentials
+        uses: aws-actions/configure-aws-credentials@0e613a0980cbf65ed5b322eb7a1e075d28913a83
         with:
           aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
           aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws-region: ap-south-1  # Replace with your AWS region
+          aws-region: ${{ env.AWS_REGION }}
 
       - name: Login to Amazon ECR
-        run: |
-          aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-          aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-          aws ecr get-login-password --region ${{ secrets.AWS_REGION }} | docker login --username AWS --password-stdin 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
+        id: login-ecr
+        uses: aws-actions/amazon-ecr-login@62f4f872db3836360b72999f4b87f1ff13310f3a
 
-      - name: Tag Docker image for ECR
+      - name: Build, tag, and push image to Amazon ECR
+        id: build-image
+        env:
+          ECR_REGISTRY: ${{ steps.login-ecr.outputs.registry }}
+          IMAGE_TAG: ${{ github.sha }}
         run: |
-          docker tag rahuldocker95/fastapi-celery:latest 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/rahulecr95:latest
-
-      - name: Push Docker image to Amazon ECR
-        run: |
-          docker push 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/rahulecr95:latest
+          # Build a docker container
+          docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
+          # Push docker container to ECR
+          docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
