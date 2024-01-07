@@ -43,6 +43,11 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           # Push docker container to ECR
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-        
+  deploy:
+    needs: build
+    runs-on: ubuntu-latest
+
+    steps:
+    - name: Deploy to EKS
         script: |
-          kubectl apply -f ./kube.yaml  # Replace with your Kubernetes deployment YAML file
+          kubectl apply -f ./kube.yaml
