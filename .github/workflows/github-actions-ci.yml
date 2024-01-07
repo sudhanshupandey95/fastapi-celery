@@ -22,13 +22,6 @@ jobs:
       with:
         kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
-    - name: Set up AWS CLI
-      uses: aws-actions/configure-aws-credentials@v2
-      with:
-        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws-region: ap-south-1  # Replace with your AWS region
-
     - name: Build and Push Docker Image
       run: |
         docker build -t rahuldocker95/fastapi-celery:latest .
@@ -38,6 +31,13 @@ jobs:
     - name: Pull Docker image from Docker Hub
       run: |
         docker pull ${{ secrets.DOCKER_USERNAME }}/fastapi-celery:latest
+    
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1  # Replace with your AWS region
 
     - name: Login to Amazon ECR
       run: |
