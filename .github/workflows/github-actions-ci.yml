@@ -15,20 +15,18 @@ jobs:
 
     - name: Login to Amazon ECR
       id: login-ecr
-      uses: aws-actions/amazon-ecr-login@v1
-      with:
-        registry: 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
-        region: ap-south-1
+      run: |
+        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
 
     - name: Build Docker image
       run: |
         docker build -t rahulecr95:latest .
-      working-directory: ./dockerfile  # Set the path to your Dockerfile
+      working-directory: ./Dockerfile  # Set the path to your Dockerfile
 
     - name: Tag Docker image
       run: |
-        docker tag rahulecr95:latest ${{ steps.login-ecr.outputs.registry }}/${{ github.repository }}:latest
+        docker tag rahulecr95:latest 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95:latest
 
     - name: Push Docker image to Amazon ECR
       run: |
-        docker push ${{ steps.login-ecr.outputs.registry }}/${{ github.repository }}:latest
+        docker push 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95:latest
