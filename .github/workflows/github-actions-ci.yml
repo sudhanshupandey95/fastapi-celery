@@ -29,11 +29,14 @@ jobs:
         aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws-region: ap-south-1  # Replace with your AWS region
 
-    - name: Build and Push Docker Image
+    - name: Login to Amazon ECR
+      run: aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com
+
+    - name: Build and Push Docker Image to ECR
       run: |
-        docker build -t rahuldocker95/fastapi-celery:latest .
-        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
-        docker push 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
+        docker build -t ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/fastapi-celery:latest .
+        docker push ${{ secrets.AWS_ACCOUNT_ID }}.dkr.ecr.ap-south-1.amazonaws.com/fastapi-celery:latest
+
 
   # deploy:
   #   needs: build
