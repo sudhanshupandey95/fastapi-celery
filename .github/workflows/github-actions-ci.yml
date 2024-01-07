@@ -1,12 +1,15 @@
-name: Docker CI/CD
+name: CI/CD for FastAPI deployment on EKS
 
 on:
   push:
     branches:
-      - master  # Change this to your main branch name
+      - master
+  pull_request:
+    branches:
+      - master 
 
 jobs:
-  build-and-push:
+  build:
     runs-on: ubuntu-latest
     environment: FAST_API_DEPLOYMENT
 
@@ -14,22 +17,65 @@ jobs:
     - name: Checkout code
       uses: actions/checkout@v2
 
-    - name: Login to Amazon ECR
-      id: login-ecr
-      run: |
-        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
-        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
-        aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
+    - name: Set up Kubectl
+      uses: azure/k8s-set-context@v1
+      with:
+        kubeconfig: ${{ secrets.KUBE_CONFIG }}
 
-    - name: Build Docker image
+    - name: Set up AWS CLI
+      uses: aws-actions/configure-aws-credentials@v2
+      with:
+        aws-access-key-id: ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws-secret-access-key: ${{ secrets.AWS_SECRET_ACCESS_KEY }}
+        aws-region: ap-south-1  # Replace with your AWS region
+
+    - name: Build and Push Docker Image
       run: |
-        docker build -t rahulecr95:latest .
-      working-directory: ./path/to/Dockerfile  # Set the path to your Dockerfile
+        docker build -t rahuldocker95/fastapi-celery:latest .
+        docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+        docker push rahuldocker95/fastapi-celery:latest
 
     - name: Tag Docker image
       run: |
-        docker tag rahulecr95:latest 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95:latest
+        docker tag rahuldocker95/fastapi-celery:latest 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/rahuldocker95/fastapi-celery:latest
 
     - name: Push Docker image to Amazon ECR
       run: |
-        docker push 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95:latest
+        docker push 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/rahuldocker95/fastapi-celery:latest
+
+
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Deploy to EKS
+  #     uses: appleboy/ssh-action@master
+  #     with:
+  #       host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
+  #       username: arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
+  #       password: Rahul95@#
+  #       timeout: 5m
+        
+  #       script: |
+  #         kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
+  #         kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
+
+  # deploy:
+  #   needs: build
+  #   runs-on: ubuntu-latest
+
+  #   steps:
+  #   - name: Deploy to EKS
+  #     uses:  actions/checkout@v2
+  #     with:
+  #       host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
+  #       username: himanshu
+  #       password: Rahul95@#
+
+  #       script: |
+  #         docker pull rahuldocker95/fastapi-celery:latest
+  #         kubectl config use-context himanshu
+  #         kubectl apply -f ./k8s/deployment.yaml
+  #         kubectl apply -f ./k8s/service.yaml
