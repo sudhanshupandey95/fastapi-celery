@@ -43,12 +43,8 @@ jobs:
           docker build -t $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG . 
           # Push docker container to ECR
           docker push $ECR_REGISTRY/$ECR_REPOSITORY:$IMAGE_TAG
-          
-  deploy-to-eks:
-    name: Deploy to EKS
-    needs: build-and-push
-    runs-on: ubuntu-latest
 
+  deploy-to-eks:
     steps:
       - name: Checkout
         uses: actions/checkout@v2
