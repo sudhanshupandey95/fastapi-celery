@@ -53,13 +53,6 @@ jobs:
       - name: Update kube config
         run: aws eks update-kubeconfig --name himanshu
 
-      - name: Login to EKS
-        uses:  actions/checkout@v2
-        with:
-           host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
-           username: himanshu
-           password: Rahul95@#
-    
       - name: Deploy to EKS
         run: |
           kubectl apply -f deployment.yaml
