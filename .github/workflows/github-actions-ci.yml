@@ -8,6 +8,7 @@ on:
 jobs:
   build-and-push:
     runs-on: ubuntu-latest
+    environment: FAST_API_DEPLOYMENT
 
     steps:
     - name: Checkout code
@@ -16,12 +17,14 @@ jobs:
     - name: Login to Amazon ECR
       id: login-ecr
       run: |
+        aws configure set aws_access_key_id ${{ secrets.AWS_ACCESS_KEY_ID }}
+        aws configure set aws_secret_access_key ${{ secrets.AWS_SECRET_ACCESS_KEY }}
         aws ecr get-login-password --region ap-south-1 | docker login --username AWS --password-stdin 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95
 
     - name: Build Docker image
       run: |
         docker build -t rahulecr95:latest .
-      working-directory: ./Dockerfile  # Set the path to your Dockerfile
+      working-directory: ./dockerfile  # Set the path to your Dockerfile
 
     - name: Tag Docker image
       run: |
