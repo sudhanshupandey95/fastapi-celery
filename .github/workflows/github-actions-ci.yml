@@ -24,7 +24,7 @@ jobs:
     - name: Build Docker image
       run: |
         docker build -t rahulecr95:latest .
-      working-directory: ./dockerfile  # Set the path to your Dockerfile
+      working-directory: ./Dockerfile  # Set the path to your Dockerfile
 
     - name: Tag Docker image
       run: |
