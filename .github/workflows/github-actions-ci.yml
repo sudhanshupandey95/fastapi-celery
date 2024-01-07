@@ -37,45 +37,9 @@ jobs:
 
     - name: Tag Docker image
       run: |
-        docker tag rahuldocker95/fastapi-celery:latest 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/rahuldocker95/fastapi-celery:latest
+        docker tag rahuldocker95/fastapi-celery:latest 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/fastapi-celery:latest
+
 
     - name: Push Docker image to Amazon ECR
       run: |
-        docker push 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/rahuldocker95/fastapi-celery:latest
-
-
-
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: Deploy to EKS
-  #     uses: appleboy/ssh-action@master
-  #     with:
-  #       host: 3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
-  #       username: arn:aws:eks:ap-south-1:185738856137:cluster/himanshu
-  #       password: Rahul95@#
-  #       timeout: 5m
-        
-  #       script: |
-  #         kubectl apply -f k8s/deployment.yaml  # Replace with your Kubernetes deployment YAML file
-  #         kubectl apply -f k8s/service.yaml  # Replace with your Kubernetes service YAML file
-
-  # deploy:
-  #   needs: build
-  #   runs-on: ubuntu-latest
-
-  #   steps:
-  #   - name: Deploy to EKS
-  #     uses:  actions/checkout@v2
-  #     with:
-  #       host: https://3921C0ED7B9F0E602D4D97C7BB570B15.gr7.ap-south-1.eks.amazonaws.com
-  #       username: himanshu
-  #       password: Rahul95@#
-
-  #       script: |
-  #         docker pull rahuldocker95/fastapi-celery:latest
-  #         kubectl config use-context himanshu
-  #         kubectl apply -f ./k8s/deployment.yaml
-  #         kubectl apply -f ./k8s/service.yaml
+        docker push 185738856137.dkr.ecr.ap-south-1.amazonaws.com/rahulecr95/fastapi-celery:latest
